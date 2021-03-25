@@ -42,7 +42,7 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   try {
     const {title, article} = req.body;
-    const dbres = await client.query('insert into blog(title, article) values($1, $2)', [title, article]);
+    const dbres = await client.query('insert into blog(title, article) values($1, $2) returning *', [title, article]);
     res.json(dbres.rows); 
   } catch (error) {
     console.error(error)
