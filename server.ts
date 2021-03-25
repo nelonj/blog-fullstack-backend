@@ -47,7 +47,7 @@ app.post("/", async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({
-      message: 'Cannot select all from blog table'
+      message: 'Cannot add row to blog table'
     }
     )
   }
@@ -56,26 +56,28 @@ app.post("/", async (req, res) => {
 app.put("/:id", async (req, res) => {
   try {
     const {title, article} = req.body;
-    const {id} = req.params;
-    const dbres = await client.query('update blog set title=$1, article=$2 where id=$3', [title, article, id]);
+    const id = parseInt(req.params.id);
+    const dbres = await client.query('update blog set title=$1, article=$2 where id=$3 returning*', [title, article, id]);
     res.json(dbres.rows); 
   } catch (error) {
     console.error(error)
     res.status(500).json({
-      message: 'Cannot select all from blog table'
+      message: 'Cannot edit row from blog table'
     }
     )
   }
 });
 
-app.delete("/", async (req, res) => {
+
+app.delete("/:id", async (req, res) => {
   try {
-    const dbres = await client.query('select * from blog');
+    const id= parseInt(req.params.id)
+    const dbres = await client.query('delete from blog where id=$1 returning*', [id]);
     res.json(dbres.rows); 
   } catch (error) {
     console.error(error)
     res.status(500).json({
-      message: 'Cannot select all from blog table'
+      message: 'Cannot delete row from blog table'
     }
     )
   }
