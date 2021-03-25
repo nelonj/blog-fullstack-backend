@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node dist/server.js",
     "start:dev": "LOCAL=true ts-node server.ts",
+    "start:heroku": "DATABASE_URL=postgres://dkhncvseijuwwa:5ecacf087bc81a40d3a83d72b0fbf256fd4b5fef233a6a3ca6ea9cea69de509e@ec2-34-195-233-155.compute-1.amazonaws.com:5432/d63j3qcuq2d56p ts-node server.ts",
     "postinstall": "tsc"
   },
-  "author": "your name here",
+  "author": "ONJ-Muhammad",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

@@ -27,8 +27,56 @@ const client = new Client(dbConfig);
 client.connect();
 
 app.get("/", async (req, res) => {
-  const dbres = await client.query('select * from categories');
-  res.json(dbres.rows);
+  try {
+    const dbres = await client.query('select * from blog');
+    res.json(dbres.rows); 
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Cannot select all from blog table'
+    }
+    )
+  }
+});
+
+app.post("/", async (req, res) => {
+  try {
+    const {title, article} = req.body;
+    const dbres = await client.query('insert into blog(title, article) values($1, $2)', [title, article]);
+    res.json(dbres.rows); 
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Cannot select all from blog table'
+    }
+    )
+  }
+});
+
+app.put("/", async (req, res) => {
+  try {
+    const dbres = await client.query('select * from blog');
+    res.json(dbres.rows); 
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Cannot select all from blog table'
+    }
+    )
+  }
+});
+
+app.delete("/", async (req, res) => {
+  try {
+    const dbres = await client.query('select * from blog');
+    res.json(dbres.rows); 
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Cannot select all from blog table'
+    }
+    )
+  }
 });
 
 
