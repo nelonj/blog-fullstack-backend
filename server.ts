@@ -53,9 +53,11 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.put("/", async (req, res) => {
+app.put("/:id", async (req, res) => {
   try {
-    const dbres = await client.query('select * from blog');
+    const {title, article} = req.body;
+    const {id} = req.params;
+    const dbres = await client.query('update blog set title=$1, article=$2 where id=$3', [title, article, id]);
     res.json(dbres.rows); 
   } catch (error) {
     console.error(error)
